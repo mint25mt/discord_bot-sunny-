@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	Token      = "iuMkGJRaK_KKsbyKT3rv1stkuhRPP0OP"
+	Token      = "BotiuMkGJRaK_KKsbyKT3rv1stkuhRPP0OP"
 	BotName    = "874558469708075019"
 	stopBot    = make(chan bool)
 	vcsession  *discordgo.VoiceConnection
