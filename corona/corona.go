@@ -1,4 +1,4 @@
-package main
+package corona
 
 import (
 	"encoding/csv"
@@ -73,7 +73,7 @@ func DisPlayTodayCorona(filename string) string {
 }
 
 func DownloadFile(filepath string, url string) error {
-
+	// filepath = "../" + filepath
 	resp, err := http.Get(url)
 	if err != nil {
 		return err
