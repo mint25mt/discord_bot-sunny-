@@ -65,8 +65,8 @@ func DisPlayTodayCorona(filename string, date string) string {
 			retval += displayList[line[1]] + "の感染者数は" + line[2] + "人です\n"
 		}
 	}
-
-	retval += "本日も感染予防をして過ごしましょう\n"
+	retval += date + "の報告"
+	retval += "感染予防をして過ごしましょう\n"
 	return retval
 }
 
