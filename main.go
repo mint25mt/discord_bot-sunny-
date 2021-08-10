@@ -27,7 +27,7 @@ func main() {
 	http.HandleFunc("/", func(res http.ResponseWriter, req *http.Request) {
 		speakToDiscord(res, req)
 	})
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe("0.0.0.0:8080", nil)
 }
 
 func speakToDiscord(res http.ResponseWriter, req *http.Request) {
