@@ -1,3 +1,3 @@
 # discord_bot-sunny-
 :sunny:
-おてんき
+おてんきbot
