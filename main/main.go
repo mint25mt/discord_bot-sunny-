@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"os/signal"
@@ -9,29 +10,33 @@ import (
 	"github.com/bwmarrin/discordgo"
 )
 
+// Variables used for command line parameters
 var (
-	Token      = os.Getenv("DISCORD_BOT_TOKEN")
-	BotName    = "874558469708075019"
-	vcsession  *discordgo.VoiceConnection
-	HelloWorld = "!helloworld"
+	Token string
 )
 
+func init() {
+
+	flag.StringVar(&Token, "t", "", "DISCORD_BOT_TOKEN")
+	flag.Parse()
+}
+
 func main() {
-	//Discordのセッションを作成
-	discord, err := discordgo.New("Bot ", Token)
-	discord.Token = Token
+	// Create a new Discord session using the provided bot token.
+	dg, err := discordgo.New("Bot " + Token)
 	if err != nil {
-		fmt.Println("Error logging in")
-		fmt.Println(err)
+		fmt.Println("error creating Discord session,", err)
+		return
 	}
 
-	discord.AddHandler(onMessageCreate) //全てのWSAPIイベントが発生した時のイベントハンドラを追加
-	// websocketを開いてlistening開始
+	// Register the messageCreate func as a callback for MessageCreate events.
+	dg.AddHandler(messageCreate)
+
 	// In this example, we only care about receiving message events.
-	discord.Identify.Intents = discordgo.IntentsGuildMessages
+	dg.Identify.Intents = discordgo.IntentsGuildMessages
 
 	// Open a websocket connection to Discord and begin listening.
-	err = discord.Open()
+	err = dg.Open()
 	if err != nil {
 		fmt.Println("error opening connection,", err)
 		return
@@ -41,12 +46,16 @@ func main() {
 	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
-	<-sc //プログラムが終了しないようロック
+	<-sc
 
-	discord.Close()
+	// Cleanly close down the Discord session.
+	dg.Close()
 }
 
-func onMessageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
+// This function will be called (due to AddHandler above) every time a new
+// message is created on any channel that the authenticated bot has access to.
+func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
+
 	// Ignore all messages created by the bot itself
 	// This isn't required in this specific example but it's a good practice.
 	if m.Author.ID == s.State.User.ID {
