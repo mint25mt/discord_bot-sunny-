@@ -51,9 +51,12 @@ func onMessageCreate(s *discordgo.Session, m *discordgo.MessageCreate, err inter
 	}
 	fmt.Printf("%20s %20s %20s > %s\n", m.ChannelID, time.Now().Format(time.Stamp), m.Author.Username, m.Content)
 
-	switch {
+	switch m.Content {
 	case strings.HasPrefix(m.Content, fmt.Sprintf("%s %s", BotName, HelloWorld)): //Bot宛に!helloworld コマンドが実行された時
 		sendMessage(s, m.ChannelID, "Hello world！")
+	}
+	case "!HelloWorld" {
+		s.ChannelMessageSend(m.ChannelID, "nyanyanyanya!!!")
 	}
 }
 
