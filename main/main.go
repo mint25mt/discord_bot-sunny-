@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strings"
-	"time"
 
 	"github.com/bwmarrin/discordgo"
 )
@@ -40,19 +38,12 @@ func main() {
 	return
 }
 
-func onMessageCreate(s *discordgo.Session, m *discordgo.MessageCreate, err interface{}) {
+func onMessageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	if m.Author.Bot {
 		return
 	}
-
-	if err != nil {
-		log.Println("Error getting channel: ", err)
-		return
-	}
-	fmt.Printf("%20s %20s %20s > %s\n", m.ChannelID, time.Now().Format(time.Stamp), m.Author.Username, m.Content)
-
 	switch m.Content {
-	case "!HelloWorld" {
+	case "!HelloWorld":
 		s.ChannelMessageSend(m.ChannelID, "nyanyanyanya!!!")
 	}
 }
