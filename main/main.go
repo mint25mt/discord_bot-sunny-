@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 	"strings"
 	"time"
 
@@ -10,7 +11,7 @@ import (
 )
 
 var (
-	Token      = "ODc0NTU4NDY5NzA4MDc1MDE5.YRIuCw.Vcx1w-TWWQIFMBcCHCiFztCzwZg"
+	Token      = os.Getenv("DISCORD_BOT_TOKEN")
 	BotName    = "874558469708075019"
 	stopBot    = make(chan bool)
 	vcsession  *discordgo.VoiceConnection
