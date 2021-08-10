@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	Token      = "Bod909416295809b6a77c349f409d3670737e03594f2fa8e9e9657aa74a014dc9d" //"Bot"という接頭辞がないと401 unauthorizedエラーが起きます
+	Token      = "iuMkGJRaK_KKsbyKT3rv1stkuhRPP0OP"
 	BotName    = "874558469708075019"
 	stopBot    = make(chan bool)
 	vcsession  *discordgo.VoiceConnection
