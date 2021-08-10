@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"io"
 	"log"
 	"net/http"
@@ -13,16 +12,6 @@ import (
 )
 
 // Variables used for command line parameters
-var (
-	Token string
-)
-
-func init() {
-
-	flag.StringVar(&Token, "t", "", "Bot Token")
-	flag.Parse()
-}
-
 func main() {
 	http.HandleFunc("/", func(res http.ResponseWriter, req *http.Request) {
 		speakToDiscord(res, req)
@@ -40,7 +29,6 @@ func speakToDiscord(res http.ResponseWriter, req *http.Request) {
 		value = weather.GetWeather()
 	default:
 		io.WriteString(res, value)
-		os.Exit(1)
 	}
 	var username = os.Getenv("HOOKS_NAME")
 	var content = value
