@@ -17,11 +17,12 @@ var (
 
 func init() {
 
-	flag.StringVar(&Token, "t", "", "DISCORD_BOT_TOKEN")
+	flag.StringVar(&Token, "t", "", "Bot Token")
 	flag.Parse()
 }
 
 func main() {
+	Token = os.Getenv("DISCORD_BOT_TOKEN")
 	// Create a new Discord session using the provided bot token.
 	dg, err := discordgo.New("Bot " + Token)
 	if err != nil {
