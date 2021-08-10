@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"os"
 
-	"coffeeBreak.com/m/v2/corona"
 	"coffeeBreak.com/m/v2/weather"
 	"github.com/gtuk/discordwebhook"
 )
@@ -23,8 +22,9 @@ func speakToDiscord(res http.ResponseWriter, req *http.Request) {
 	value := "invalid parameter"
 	switch req.FormValue("content") {
 	case "corona":
-		corona.DownloadFile("corona.csv", "https://covid19.mhlw.go.jp/public/opendata/newly_confirmed_cases_daily.csv")
-		value = corona.DisPlayTodayCorona("corona.csv")
+		// corona.DownloadFile("corona.csv", "https://covid19.mhlw.go.jp/public/opendata/newly_confirmed_cases_daily.csv")
+		// value = corona.DisPlayTodayCorona("corona.csv")
+		value = "corona"
 	case "weather":
 		value = weather.GetWeather()
 	default:
