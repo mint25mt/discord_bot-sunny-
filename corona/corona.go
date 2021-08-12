@@ -1,11 +1,10 @@
-package main
+package corona
 
 import (
 	"encoding/csv"
 	"io"
 	"net/http"
 	"os"
-	"time"
 )
 
 // func main() {
@@ -43,7 +42,7 @@ import (
 // 	fmt.Println(retval)
 // }
 
-func DisPlayTodayCorona(filename string) string {
+func DisPlayTodayCorona(filename string, date string) string {
 	file, err := os.Open(filename)
 	if err != nil {
 		panic(err)
@@ -53,7 +52,6 @@ func DisPlayTodayCorona(filename string) string {
 	reader := csv.NewReader(file)
 	var line []string
 	displayList := map[string]string{"ALL": "全国", "Aichi": "愛知", "Tokyo": "東京"}
-	t := time.Now()
 	var retval string
 
 	for {
@@ -61,19 +59,19 @@ func DisPlayTodayCorona(filename string) string {
 		if err != nil {
 			break
 		}
-		isSelectedDate := t.Format("2006/1/2") == line[0]
+		isSelectedDate := date == line[0]
 		_, isSelectedRegion := displayList[line[1]]
 		if isSelectedDate && isSelectedRegion {
 			retval += displayList[line[1]] + "の感染者数は" + line[2] + "人です\n"
 		}
 	}
-
-	retval += "本日も感染予防をして過ごしましょう\n"
+	retval += date
+	retval += "の報告でした\n"
+	retval += "感染予防をして過ごしましょう\n"
 	return retval
 }
 
 func DownloadFile(filepath string, url string) error {
-
 	resp, err := http.Get(url)
 	if err != nil {
 		return err
