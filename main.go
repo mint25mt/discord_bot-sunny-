@@ -8,8 +8,8 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
 
+	"coffeeBreak.com/m/v2/bot"
 	"coffeeBreak.com/m/v2/corona"
 	"coffeeBreak.com/m/v2/types"
 	"coffeeBreak.com/m/v2/weather"
@@ -17,10 +17,12 @@ import (
 
 // Variables used for command line parameters
 func main() {
+	go bot.CatBot()
 	http.HandleFunc("/", func(res http.ResponseWriter, req *http.Request) {
 		speakToDiscord(res, req)
 	})
-	http.ListenAndServe(":"+os.Getenv("PORT"), nil)
+	// http.ListenAndServe(":"+os.Getenv("PORT"), nil)
+	http.ListenAndServe(":8080", nil)
 }
 
 func speakToDiscord(res http.ResponseWriter, req *http.Request) {
@@ -33,9 +35,11 @@ func speakToDiscord(res http.ResponseWriter, req *http.Request) {
 		value = weather.GetWeather()
 	}
 	io.WriteString(res, value)
-	var username = os.Getenv("HOOKS_NAME")
+	// var username = os.Getenv("HOOKS_NAME")
+	var username = "Captain Hook"
 	var content = value
-	var url = os.Getenv("URL")
+	// var url = os.Getenv("URL")
+	var url = "https://discordapp.com/api/webhooks/874657070807388200/nhYHdQ9up7IwTg2GnHy3Gdnfm1Ki7HqDcYANN6FlOz-WHrp0C3mOz5k5ijkJe9J62qZU"
 
 	message := types.Message{
 		Username: &username,
